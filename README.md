@@ -41,9 +41,11 @@ Las notificaciones se activan bajo las siguientes condiciones:
 
 Este módulo puede integrarse con servicios de mensajería (como correos electrónicos o notificaciones push) para asegurar que las notificaciones sean entregadas de manera efectiva. 
 
-## Contribuciones
+## Integrantes
 
-Se anima a los desarrolladores a contribuir con mejoras o correcciones. Para contribuir, por favor sigue las pautas de contribución en este repositorio.
-
-## Licencia
+- Paula Natalia Paez Vega
+- Andres Felipe Rodriguez Chaparro
+- Santiago Guerra Penagos
+- Marco Antonio Alvarez Ramirez
+- Manuel Felipe Barrera Barrera
 
