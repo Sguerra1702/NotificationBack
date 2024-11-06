@@ -5,26 +5,30 @@ import java.time.LocalDateTime;
 public class Notification {
     private long id;
     private String message;
-    private LocalDateTime timeNotification;
+    private LocalDateTime time;
     private long bookID;
     private long studentID;
     private long ResponsableID;
     private String state;
-
+    private NotificationType type;
+    private Double mount;
+    
     public Notification(){
-        
+
     }
 
-    public Notification(long id, String message,LocalDateTime timeNotification, long bookID, long studentID, long ResponsableID, String state){
+    public Notification(long id,NotificationType type,LocalDateTime time, long bookID, long studentID, long ResponsableID, String state,  String message, double mount){
         this.id = id;
-        this.message = message;
-        this.timeNotification=timeNotification;
+        this.type=type;
+        this.time=time;
         this.bookID= bookID;
         this.studentID=studentID;
         this.ResponsableID=ResponsableID;
         this.state = state;
-
+        this.message = message;
+        this.mount=mount;
     }
+
     //getters
     public long getId(){
         return id;
@@ -36,7 +40,7 @@ public class Notification {
     }
 
     public LocalDateTime getLocaldate(){
-        return timeNotification;
+        return time;
 
     }
 
@@ -58,6 +62,14 @@ public class Notification {
         return state;
     }
 
+    public NotificationType getType(){
+        return type;
+    }
+    
+    public double getMount(){
+        return mount;
+    }
+
     //setters
 
     public void setId(long id){
@@ -68,8 +80,8 @@ public class Notification {
         this.message=message;
     }
 
-    public void setLocaldate(LocalDateTime timeNotification){
-        this.timeNotification=timeNotification;
+    public void setLocaldate(LocalDateTime time){
+        this.time=time;
     }
 
     public void setBookId(long bookID){
@@ -89,6 +101,12 @@ public class Notification {
         this.state=state;
     }
 
-}
+    public void setType(NotificationType type){
+        this.type=type;
+    }
 
+    public void setMount(double mount){
+        this.mount=mount;
+}
+}
 
