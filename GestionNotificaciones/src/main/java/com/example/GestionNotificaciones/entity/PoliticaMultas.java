@@ -56,7 +56,7 @@ public class PoliticaMultas {
 
     public double calcularMulta(int diasDeRetraso) {
         if (diasDeRetraso <= diasDeGracia) {
-            return 0.0;  // No hay multa si el retraso está dentro del periodo de gracia
+            return 0.0;  
         }
         return montoBase + (diasDeRetraso - diasDeGracia) * tarifaPorDia;
     }

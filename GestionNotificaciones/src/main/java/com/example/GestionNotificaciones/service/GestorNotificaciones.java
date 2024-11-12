@@ -16,6 +16,7 @@ public class GestorNotificaciones {
     @Autowired
     private NotificacionRepository notificacionRepository;
 
+    // 2
     public void enviarNotificacionesPrestamoRealizado(String mensaje){
         Notificacion notificacion = new Notificacion();
         notificacion.setTipo("Prestamo Realizado");
@@ -34,7 +35,7 @@ public class GestorNotificaciones {
             notificacion.setMensaje(mensaje);
             notificacion.setFechaEnvio(LocalDate.now());
             notificacionRepository.save(notificacion);
-            }
+        }
 
     }
 
