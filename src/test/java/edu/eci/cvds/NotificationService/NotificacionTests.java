@@ -20,16 +20,17 @@ class notificationnotificationTests {
     void setUp() {
         responsable = new ResponsableEconomic("Carlos", "García", "Juan Pérez", "carlos@example.com");
         notification = new Notification("Pago", "Tu pago ha sido procesado", LocalDate.now(), responsable);
+        notification.setType(NotificationType.LOAN_MADE);
     }
 
     @Test
     void contextLoads() {
         assertNotNull(notification);
     }
-    /* 
+
     @Test
     void testGetters() {
-        assertEquals("Pago", notification.getType());
+        assertEquals(NotificationType.LOAN_MADE, notification.getType());
         assertEquals("Tu pago ha sido procesado", notification.getmessage());
         assertEquals(LocalDate.now(), notification.getdate());
         assertEquals("Carlos", notification.getResponsableEconomic().getNombre());
@@ -37,7 +38,7 @@ class notificationnotificationTests {
         assertEquals("Juan Pérez", notification.getResponsableEconomic().getEstudiante());
         assertEquals("carlos@example.com", notification.getResponsableEconomic().getEmail());
     }
-
+    
     @Test
     void testSetters() {
         notification.setType(NotificationType.LOAN_REMINDER);
@@ -47,7 +48,7 @@ class notificationnotificationTests {
         ResponsableEconomic nuevoResponsable = new ResponsableEconomic("Ana", "Lopez", "Pedro López", "ana@example.com");
         notification.setResponsableEconomic(nuevoResponsable);
 
-        assertEquals("Aviso", notification.getTipo());
+        assertEquals(NotificationType.LOAN_REMINDER, notification.getType());
         assertEquals("Por favor, revisa tu estado de cuenta", notification.getmessage());
         assertEquals(LocalDate.of(2024, 11, 12), notification.getdate());
         assertEquals("Ana", notification.getResponsableEconomic().getNombre());
@@ -55,7 +56,7 @@ class notificationnotificationTests {
         assertEquals("Pedro López", notification.getResponsableEconomic().getEstudiante());
         assertEquals("ana@example.com", notification.getResponsableEconomic().getEmail());
     }
-
+    
     @Test
     void testConstructorWithoutId() {
         Notification nuevanotificationnotification = new Notification("Recordatorio", "Pago pendiente", LocalDate.of(2024, 12, 15), responsable);
@@ -68,5 +69,5 @@ class notificationnotificationTests {
         assertEquals("Juan Pérez", nuevanotificationnotification.getResponsableEconomic().getEstudiante());
         assertEquals("carlos@example.com", nuevanotificationnotification.getResponsableEconomic().getEmail());
     }
-    */
+
 }
