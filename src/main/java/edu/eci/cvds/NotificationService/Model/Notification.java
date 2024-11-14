@@ -1,112 +1,130 @@
 package edu.eci.cvds.NotificationService.Model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "notificaciones")
 public class Notification {
-    private long id;
+
+    @Id
+    private String id;
+    private LocalDate date;
     private String message;
-    private LocalDateTime time;
-    private long bookID;
-    private long studentID;
-    private long ResponsableID;
-    private String state;
+    private String tipo;
+    private Long bookID;
+    private Long studentID;
+    private ResponsableEconomic responsableEconomic;
     private NotificationType type;
     private Double mount;
+    private String state;
     
-    public Notification(){
-
+    public Notification() {
+    
     }
 
-    public Notification(long id,NotificationType type,LocalDateTime time, long bookID, long studentID, long ResponsableID, String state,  String message, double mount){
+    
+        public Notification(String tipo, String message, LocalDate date, ResponsableEconomic responsableEconomic) {
+            this.tipo = tipo;
+            this.message = message;
+            this.date = date;
+            this.responsableEconomic = responsableEconomic;
+        }
+
+        public Notification(String id,NotificationType type,LocalDate date, Long bookID, Long studentID, ResponsableEconomic responsableEconomic, String state,  String message, double mount){
         this.id = id;
         this.type=type;
-        this.time=time;
+        this.date=date;
         this.bookID= bookID;
         this.studentID=studentID;
-        this.ResponsableID=ResponsableID;
+        this.responsableEconomic = responsableEconomic;
         this.state = state;
         this.message = message;
-        this.mount=mount;
+        this.mount=mount; 
     }
 
-    //getters
-    public long getId(){
+    public String getId() {
         return id;
     }
 
-    public String getmessage(){
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setType(NotificationType type) {
+        this.type=type;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getmessage() {
         return message;
-    
     }
 
-    public LocalDateTime getLocaldate(){
-        return time;
-
+    public void setmessage(String message) {
+        this.message = message;
     }
 
-    public long getBookId(){
-        return bookID;
-
+    public LocalDate getdate() {
+        return date;
     }
 
-    public long getStudentId(){
-        return studentID;
-        
+    public NotificationType getType(){
+        return type;
     }
 
-    public long getResponsableID(){
-        return ResponsableID;
+    public void setdate(LocalDate date) {
+        this.date = date;
     }
 
     public String getState(){
         return state;
     }
 
-    public NotificationType getType(){
-        return type;
-    }
-    
-    public double getMount(){
-        return mount;
+    public void setstate(String state){
+        this.state = state;
     }
 
-    //setters
-
-    public void setId(long id){
-        this.id=id;
+    public ResponsableEconomic getResponsableEconomic() {
+        return responsableEconomic;
     }
 
-    public void setmessage(String message){
-        this.message=message;
-    }
-
-    public void setLocaldate(LocalDateTime time){
-        this.time=time;
-    }
-
-    public void setBookId(long bookID){
-        this.bookID=bookID;
-
-    }
-
-    public void setStudentId(long studentID){
-        this.studentID=studentID;
-    }
-
-    public void setResponsableId(long ResponsableID){
-        this.ResponsableID=ResponsableID;
-    }
-
-    public void setState(String state){
-        this.state=state;
-    }
-
-    public void setType(NotificationType type){
-        this.type=type;
+    public void setResponsableEconomic(ResponsableEconomic responsableEconomic) {
+        this.responsableEconomic = responsableEconomic;
     }
 
     public void setMount(double mount){
         this.mount=mount;
-}
+    }
+
+    public Double getMount(){
+        return mount;
+    }
+
+    public void setStudentId(Long studentID){
+        this.studentID=studentID;
+    }
+
+    public Long getStudentId(){
+        return studentID;
+        
+    }
+
+    public Long getBookId(){
+        return bookID;
+
+    }
+
+    public void setBookId(Long bookID){
+        this.bookID=bookID;
+    }
+
 }
 
