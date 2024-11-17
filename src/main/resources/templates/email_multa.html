@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+    }
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    .header {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .content {
+      margin-bottom: 20px;
+    }
+    .details {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    .footer {
+      font-size: 14px;
+      color: #555;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">Notificación de Multa - Biblioteca</div>
+    <div class="content">
+      <p>Estimado <strong>{{responsableNombre}}</strong>,</p>
+      <p>Le informamos que el estudiante <strong>{{estudianteNombre}}</strong> ha acumulado una multa por un libro prestado. A continuación, encontrará los detalles del préstamo y la multa:</p>
+    </div>
+    <div class="details">
+      <p><strong>Título del libro:</strong> {{tituloLibro}}</p>
+      <p><strong>ISBN:</strong> {{isbn}}</p>
+      <p><strong>Fecha del préstamo:</strong> {{fechaPrestamo}}</p>
+      <p><strong>Fecha límite de devolución:</strong> {{fechaLimite}}</p>
+      <p><strong>Costo actual de la multa:</strong> ${{costoMulta}}</p>
+    </div>
+    <div class="content">
+      <p>Agradecemos hacer la devolución del libro y posteriormente el pago de la multa correspondiente. Recuerde que por cada día de mora, el costo de la multa aumentará.</p>
+      <p>Sin más. <br> Feliz día.</p>
+    </div>
+    <div class="footer">
+      <p><strong>Biblioteca Colegio Nuestra Señora de la Sabiduría
+       </strong></p>
+    </div>
+  </div>
+</body>
+</html>
