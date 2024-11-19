@@ -30,7 +30,7 @@ public class EmailNotificationServiceTest {
 
 
 
-    /* 
+
     @Test
     public void testEnviarCorreo() throws MessagingException {
         EmailDTO emailDTO = new EmailDTO();
@@ -38,11 +38,11 @@ public class EmailNotificationServiceTest {
         emailDTO.setAsunto("Funciona");
         emailDTO.setMensaje("Me debes esta vida y la otra");
 
-        emailNotificationService.enviarCorreo(emailDTO);
+        emailNotificationService.enviarCorreo(emailDTO, "prueba");
 
     }
     
-    */
+
     @Test
     public void testEnviarNotificacionPrestamoVencido() throws MessagingException {
         // Configuración del objeto Loan de prueba
