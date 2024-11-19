@@ -8,7 +8,6 @@ import edu.eci.cvds.NotificationService.Service.NotificationService;
 
 import java.time.LocalDate;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -52,7 +51,6 @@ public class EmailNotificationServiceTest {
         loan.setFechaLoan(LocalDate.of(2024, 11, 10));
         loan.setFechaDevolucion(LocalDate.now());
 
-
         ResponsableEconomic responsable = new ResponsableEconomic();
         responsable.setNombre("Natalia Páez");
         responsable.setEmail("rodriguezandres160918@gmail.com");
@@ -60,7 +58,5 @@ public class EmailNotificationServiceTest {
 
          // Llamar al método para enviar el correo
          notificationService.enviarnotificacionprestamovencido(loan);
-
-         System.out.println("Correo enviado exitosamente. Verifica la bandeja de entrada.");
      }
 }

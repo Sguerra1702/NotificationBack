@@ -59,9 +59,8 @@ public class NotificationService {
         context.setVariable("isbn", loan.getIsbn());
         context.setVariable("fechaPrestamo", loan.getFechaLoan());
 
-        String templateName = "LoanOverdue";  // Este es el nombre de la plantilla que utilizas
+        String templateName = "LoanOverdue"; 
 
-        // Procesar la plantilla con el templateName
         String contentHTML = templateEngine.process(templateName, context);
 
         try{

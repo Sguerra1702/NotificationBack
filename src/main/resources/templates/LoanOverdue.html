@@ -56,16 +56,16 @@
   <div class="container">
     <div class="header">Notificación de Multa - Biblioteca</div>
     <div class="content">
-      <p>Estimado <strong>{{responsablEconomic}}</strong>,</p>
-      <p>Le notificamos que el préstamo realizado el día <strong>{{fechaPrestamo}}</strong> del libro <strong>{{tituloLibro}}</strong> (ISBN: <strong>{{isbn}}</strong>) 
-        ha excedido la fecha de devolución permitida. A continuación, encontrará los detalles:</p>
+      <p>Estimado <b th:text="${responsableEconomico}"></b>,</p>
+      <p>Le notificamos que el préstamo realizado el día <b th:text="${fechaPrestamo}"></b> del libro <b th:text="${tituloLibro}"></b> (ISBN: <b th:text="${isbn}"></b>) ha excedido la fecha de devolución permitida.</p>
+      <p>Detalles:</p>
     </div>
-    <div class="details">
-      <p><strong>Título del libro:</strong> {{tituloLibro}}</p>
-      <p><strong>ISBN:</strong> {{isbn}}</p>
-      <p><strong>Fecha del préstamo:</strong> {{fechaPrestamo}}</p>
-      <p><strong>Multa por día de retraso:</strong> ${{multaPorDia}}</p>
-    </div>
+    <ul>
+      <li>Título del libro: <b th:text="${tituloLibro}"></b></li>
+      <li>ISBN: <b th:text="${isbn}"></b></li>
+      <li>Fecha del préstamo: <b th:text="${fechaPrestamo}"></b></li>
+      <li>Multa por día de retraso: $<b th:text="${multaPorDia}"></b></li>
+  </ul>
     <div class="content">
       <p>Le solicitamos devolver el libro a la brevedad posible y cubrir las multas correspondientes. Si tiene alguna duda, no dude en contactarnos.</p>
       <p>Atentamente, <br> Equipo de la Biblioteca</p>
