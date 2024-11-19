@@ -29,7 +29,7 @@ public class EmailNotificationService  implements IEmailRepository{
     
 
     @Override
-    public void enviarCorreo(EmailDTO emailDto) throws MessagingException{
+    public void enviarCorreo(EmailDTO emailDto, String templateName) throws MessagingException{
         try {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -38,7 +38,7 @@ public class EmailNotificationService  implements IEmailRepository{
         helper.setText(emailDto.getMensaje());
         Context context = new Context();
         context.setVariable("message", emailDto.getMensaje());
-        String contentHTML = templateEngine.process("email", context);
+        String contentHTML = templateEngine.process(templateName, context);
 
         helper.setText(contentHTML, true);
         javaMailSender.send(message);

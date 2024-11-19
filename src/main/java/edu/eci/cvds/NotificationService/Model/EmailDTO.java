@@ -5,6 +5,7 @@ public class EmailDTO {
     private String responsableEconomico;
     private String asunto; 
     private String mensaje;
+    private String templateName;
 
     public String getResponsableEconomico() {
         return this.responsableEconomico;
@@ -30,4 +31,11 @@ public class EmailDTO {
         this.mensaje = mensaje;
     }
     
+    public String getTemplateName(){
+        return templateName;
+    }
+
+    public void setTemplateName(String templateName){
+        this.templateName=templateName;
+    }
 }
