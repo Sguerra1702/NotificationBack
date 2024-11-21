@@ -1,7 +1,6 @@
 package edu.eci.cvds.NotificationService.Service;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import edu.eci.cvds.NotificationService.Model.EmailDTO;
 import edu.eci.cvds.NotificationService.Model.Loan;
 import edu.eci.cvds.NotificationService.Model.Notification;
 import edu.eci.cvds.NotificationService.Model.NotificationType;
+import edu.eci.cvds.NotificationService.Model.Student;
 import edu.eci.cvds.NotificationService.Repository.NotificationRepository;
 import jakarta.mail.MessagingException;
 
@@ -25,29 +25,55 @@ public class NotificationService {
 
     @Autowired
     private EmailNotificationService emailNotificationService;
+
     @Autowired
     private TemplateEngine templateEngine;
 
-    public void enviarNotificacionprestamorealizado(String message){
+    public void enviarNotificacionprestamorealizado(Loan loan, Student student){
 
+        Context context = new Context();
+        context.setVariable("estudiante",student.getname());
+        context.setVariable("responsableEconomico", loan.getResponsableEconomico().getNombre());
+        context.setVariable("tituloLibro", loan.getLibroId());
+        context.setVariable("isbn", loan.getIsbn());
+        context.setVariable("fechaPrestamo", loan.getFechaLoan());
+        context.setVariable("fechaLimiteDevolucion", loan.getFechaDevolucion());
+        String templateName = "Loan";
+        String contentHTML = templateEngine.process(templateName, context);
+
+        try {
+            EmailDTO emailDto = new EmailDTO();
+            emailDto.setResponsableEconomico(loan.getResponsableEconomico().getEmail());
+            emailDto.setAsunto("Recordatorio: PrestamoRealizado");
+            emailDto.setMensaje(contentHTML);
+
+            emailNotificationService.enviarCorreo(emailDto);
+
+        } catch (MessagingException e) {
+            throw new RuntimeException("Error al enviar notificación de préstamo por vencer: " + e.getMessage(), e);
+        }
+
+
+        /* 
         Notification notification = new Notification();
         notification.setType(NotificationType.LOAN_MADE);
         notification.setmessage(message);
         notification.setdate(LocalDate.now());
         notificationRepository.save(notification);
+        */
+
     }
 
     public void enviarNotificacionPrestamoPorVencer(Loan loan) {
         LocalDate fechaRecordatorio = loan.getFechaDevolucion().minusDays(3);
         if (LocalDate.now().isEqual(fechaRecordatorio)) {
             Context context = new Context();
-            context.setVariable("responsableNombre", loan.getResponsableEconomico().getNombre());
+            context.setVariable("responsableEconomico", loan.getResponsableEconomico().getNombre());
             context.setVariable("tituloLibro", loan.getLibroId());
-            context.setVariable("id", loan.getId());
+            context.setVariable("isbn", loan.getIsbn());
             context.setVariable("fechaLimiteDevolucion", loan.getFechaDevolucion());
+
             String templateName = "LoanReminder";
-
-
             String contentHTML = templateEngine.process(templateName, context);
 
             try {
@@ -56,7 +82,7 @@ public class NotificationService {
                 emailDto.setAsunto("Recordatorio: Préstamo próximo a vencer");
                 emailDto.setMensaje(contentHTML);
 
-                emailNotificationService.enviarCorreo(emailDto, "LoanReminder");
+                emailNotificationService.enviarCorreo(emailDto);
 
             } catch (MessagingException e) {
                 throw new RuntimeException("Error al enviar notificación de préstamo por vencer: " + e.getMessage(), e);
@@ -65,10 +91,10 @@ public class NotificationService {
     }
 
 
-    public void enviarnotificacionprestamovencido(Loan loan) {
-        if (LocalDate.now().isEqual(loan.getFechaDevolucion())) ;
+    public void enviarnotificacionprestamovencido(Loan loan) throws MessagingException{
+        if (LocalDate.now().isEqual(loan.getFechaDevolucion())){
         Context context = new Context();
-        context.setVariable("responsableNombre", loan.getResponsableEconomico().getNombre());
+        context.setVariable("responsableEconomico", loan.getResponsableEconomico().getNombre());
         context.setVariable("tituloLibro", loan.getLibroId());
         context.setVariable("isbn", loan.getIsbn());
         context.setVariable("fechaPrestamo", loan.getFechaLoan());
@@ -76,6 +102,7 @@ public class NotificationService {
         String templateName = "LoanOverdue";
 
         String contentHTML = templateEngine.process(templateName, context);
+        System.out.println(contentHTML);
 
         try {
             EmailDTO emailDto = new EmailDTO();
@@ -83,11 +110,11 @@ public class NotificationService {
             emailDto.setAsunto("Notificación de Préstamo Vencido");
             emailDto.setMensaje(contentHTML);
 
-
-            emailNotificationService.enviarCorreo(emailDto, "LoanOverdue"); // Llama al método para enviar el correo
+            emailNotificationService.enviarCorreo(emailDto); // Llama al método para enviar el correo
         } catch (MessagingException e) {
             throw new RuntimeException("Error al enviar notificación de préstamo vencido: " + e.getMessage(), e);
         }
+    }
         /* 
         // Crear la notificación y guardarla en el repositorio
         String message = "El préstamo ha vencido. Por favor, devuelva el libro.";
@@ -96,7 +123,6 @@ public class NotificationService {
         notificationRepository.save(notification);
         */
     }
-
 
 
 

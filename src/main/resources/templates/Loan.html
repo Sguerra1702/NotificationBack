@@ -54,10 +54,10 @@
 </head>
 <body>
   <div class="container">
-    <div class="header">Notificación de Vencimiento de Préstamo - Biblioteca</div>
+    <div class="header">Notificación de Préstamo Realizado - Biblioteca</div>
     <div class="content">
       <p>Estimad@ <b th:text="${responsableEconomico}"></b>,</p>
-      <p>Le notificamos que el préstamo realizado el día <b th:text="${fechaPrestamo}"></b> del libro <b th:text="${tituloLibro}"></b> (ISBN: <b th:text="${isbn}"></b>) ha excedido la fecha de devolución permitida.</p>
+      <p>El estudiante<b th:text="${estudiante}"></b> ha tomado prestado un libro de nuestra biblioteca. A continuación, se detallan los datos del préstamo:</p>
       <p>Detalles:</p>
     </div>
     <ul>
@@ -68,7 +68,7 @@
       <li><strong>Multa por día de retraso:</strong> $<b th:text="${multaPorDia}"></b></li>
     </ul>
     <div class="content">
-      <p>Le solicitamos devolver el libro a la brevedad posible y cubrir las multas correspondientes. Si tiene alguna duda, no dude en contactarnos.</p>
+      <p>Le solicitamos devolver el libro en las fechas estipuladas y mantenerlo en buen estado.</p>
       <p>Atentamente, <br> Equipo de la Biblioteca</p>
     </div>
     <div class="footer">

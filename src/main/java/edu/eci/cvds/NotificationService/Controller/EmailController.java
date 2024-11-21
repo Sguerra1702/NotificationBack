@@ -24,9 +24,8 @@ public class EmailController {
     public ResponseEntity<String> enviarCorreo(@RequestBody EmailDTO emailDTO) throws MessagingException {
         // Obtener templateName desde el EmailDTO
         String templateName = emailDTO.getTemplateName();
-        
         // Llamar al repositorio con los parámetros
-        emailRepository.enviarCorreo(emailDTO, templateName);
+        emailRepository.enviarCorreo(emailDTO);
 
         return new ResponseEntity<>("Correo enviado exitosamente", HttpStatus.OK);
     }

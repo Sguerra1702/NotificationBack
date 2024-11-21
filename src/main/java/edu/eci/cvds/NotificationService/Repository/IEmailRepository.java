@@ -4,5 +4,5 @@ import edu.eci.cvds.NotificationService.Model.EmailDTO;
 import jakarta.mail.MessagingException;
 
 public interface IEmailRepository {
-    public void enviarCorreo(EmailDTO emailDTO, String templateName) throws MessagingException;
+    public void enviarCorreo(EmailDTO emailDTO) throws MessagingException;
 }
