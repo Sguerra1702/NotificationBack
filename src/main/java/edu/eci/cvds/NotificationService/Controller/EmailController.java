@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.*;
 
 import edu.eci.cvds.NotificationService.Repository.IEmailRepository;
 import edu.eci.cvds.NotificationService.Model.EmailDTO;
+import edu.eci.cvds.NotificationService.Model.Fines;
 import edu.eci.cvds.NotificationService.Model.Loan;
+import edu.eci.cvds.NotificationService.Model.Student;
 import edu.eci.cvds.NotificationService.Service.NotificationService;
 import jakarta.mail.MessagingException;
 
@@ -54,8 +56,8 @@ public class EmailController {
 
     // Endpoint para enviar notificación de multa
     @PostMapping("/fine")
-    public ResponseEntity<String> enviarNotificacionMulta(@RequestParam String message, @RequestParam double multa) {
-        notificationService.enviarnotificacionmulta(message, multa);
+    public ResponseEntity<String> enviarNotificacionMulta(@RequestBody Loan loan, @RequestBody Fines fines, @RequestParam Student student) {
+        notificationService.enviarnotificacionmulta(loan, fines, student);
         return new ResponseEntity<>("Notificación de multa enviada exitosamente", HttpStatus.OK);
     }
 }

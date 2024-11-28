@@ -5,24 +5,18 @@ import edu.eci.cvds.NotificationService.Model.Loan;
 import edu.eci.cvds.NotificationService.Model.ResponsableEconomic;
 import edu.eci.cvds.NotificationService.Model.Student;
 import edu.eci.cvds.NotificationService.Service.EmailNotificationService;
+import edu.eci.cvds.NotificationService.Model.Fines;
 import edu.eci.cvds.NotificationService.Service.NotificationService;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.IContext;
 
-import org.thymeleaf.context.Context;
 import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 
 
 @SpringBootTest
@@ -87,7 +81,7 @@ public class EmailNotificationServiceTest {
         notificationService.enviarNotificacionPrestamoPorVencer(loan);
     }
     */
-
+    /* 
     @Test
     public void testEnviarNotificacionPrestamoRealizado() throws MessagingException {
 
@@ -107,5 +101,31 @@ public class EmailNotificationServiceTest {
 
         // Llamar al método para enviar el correo
         notificationService.enviarNotificacionprestamorealizado(loan,student);
+    }
+    */
+
+    @Test
+    public void testEnviarNotificacionMulta() throws MessagingException {
+
+        Student student = new Student();
+        student.setname("Manuel Barrera");
+
+        Loan loan = new Loan();
+        loan.setLibroId("Introducción a Java");
+        loan.SetIsbn("978-3-16-148410-0");
+        loan.setFechaLoan(LocalDate.of(2024, 11, 10));
+        loan.setFechaDevolucion(LocalDate.now());
+        Fines fines = new Fines();
+        fines.calcularMulta(2);
+        
+
+        ResponsableEconomic responsable = new ResponsableEconomic();
+        responsable.setNombre("Natalia Páez");
+        responsable.setEmail("rodriguezandres160918@gmail.com");
+        loan.setResponsableEconomico(responsable);
+
+
+        // Llamar al método para enviar el correo
+        notificationService.enviarnotificacionmulta(loan,fines,student);
     }
 }

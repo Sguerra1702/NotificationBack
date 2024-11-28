@@ -43,25 +43,24 @@
 </head>
 <body>
   <div class="container">
-    <div class="header">Notificación de Multa - Biblioteca</div>
+    <div class="header">Notificación de Préstamo Realizado - Biblioteca</div>
     <div class="content">
-      <p>Estimado <strong>{{responsableNombre}}</strong>,</p>
-      <p>Le informamos que el estudiante <strong>{{estudianteNombre}}</strong> ha acumulado una multa por un libro prestado. A continuación, encontrará los detalles del préstamo y la multa:</p>
+      <p>Estimad@ <b th:text="${responsableEconomico}"></b>,</p>
+      <p>El estudiante<b th:text="${estudiante}"></b> aún no ha devuelto el libro que tomó prestado, a continuación se detallan las condiciones</p>
+      <p>Detalles:</p>
     </div>
-    <div class="details">
-      <p><strong>Título del libro:</strong> {{tituloLibro}}</p>
-      <p><strong>ISBN:</strong> {{isbn}}</p>
-      <p><strong>Fecha del préstamo:</strong> {{fechaPrestamo}}</p>
-      <p><strong>Fecha límite de devolución:</strong> {{fechaLimite}}</p>
-      <p><strong>Costo actual de la multa:</strong> ${{costoMulta}}</p>
-    </div>
+    <ul>
+      <li><strong>Título del libro:</strong> <b th:text="${tituloLibro}"></b></li>
+      <li><strong>ISBN:</strong> <b th:text="${isbn}"></b></li>
+      <li><strong>Fecha límite de devolución:</strong> <b th:text="${fechaLimiteDevolucion}"></b></li>
+      <li><strong>Multa por día de retraso:</strong> $<b th:text="${multaPorDia}"></b></li>
+    </ul>
     <div class="content">
-      <p>Agradecemos hacer la devolución del libro y posteriormente el pago de la multa correspondiente. Recuerde que por cada día de mora, el costo de la multa aumentará.</p>
-      <p>Sin más. <br> Feliz día.</p>
+      <p>Le solicitamos devolver el libro para que la multa no se acrecente</p>
+      <p>Atentamente, <br> Equipo de la Biblioteca</p>
     </div>
     <div class="footer">
-      <p><strong>Biblioteca Colegio Nuestra Señora de la Sabiduría
-       </strong></p>
+      <p><strong>Biblioteca - Colegio Nuestra Señora de la Sabiduría</strong></p>
     </div>
   </div>
 </body>

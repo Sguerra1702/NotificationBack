@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.eci.cvds.NotificationService.Model.EmailDTO;
+import edu.eci.cvds.NotificationService.Model.Fines;
 import edu.eci.cvds.NotificationService.Model.Loan;
 import edu.eci.cvds.NotificationService.Model.Notification;
 import edu.eci.cvds.NotificationService.Model.NotificationType;
@@ -22,6 +23,7 @@ import org.thymeleaf.context.Context;
 public class NotificationService {
     
     private NotificationRepository notificationRepository;
+    private Fines fines;
 
     @Autowired
     private EmailNotificationService emailNotificationService;
@@ -102,7 +104,6 @@ public class NotificationService {
         String templateName = "LoanOverdue";
 
         String contentHTML = templateEngine.process(templateName, context);
-        System.out.println(contentHTML);
 
         try {
             EmailDTO emailDto = new EmailDTO();
@@ -115,22 +116,35 @@ public class NotificationService {
             throw new RuntimeException("Error al enviar notificación de préstamo vencido: " + e.getMessage(), e);
         }
     }
-        /* 
-        // Crear la notificación y guardarla en el repositorio
-        String message = "El préstamo ha vencido. Por favor, devuelva el libro.";
-        Notification notification = new Notification("Préstamo vencido", message, LocalDate.now(), loan.getResponsableEconomico());
-        notification.setType(NotificationType.LOAN_OVERDUE);
-        notificationRepository.save(notification);
-        */
     }
 
 
 
-    public void enviarnotificacionmulta(String message, double multa){
-        Notification notification = new Notification();
-        notification.setType(NotificationType.FINE);
-        notification.setmessage(message + "monto de la multa: $" + multa);
-        notificationRepository.save(notification);
-    }
-    }
+    public void enviarnotificacionmulta(Loan loan, Fines fines, Student student){
+            Context context = new Context();
+            context.setVariable("estudiante",student.getname());
+            context.setVariable("responsableEconomico", loan.getResponsableEconomico().getNombre());
+            context.setVariable("tituloLibro", loan.getLibroId());
+            context.setVariable("isbn", loan.getIsbn());
+            context.setVariable("fechaLimiteDevolucion", loan.getFechaDevolucion());
+            context.setVariable("multaPorDia", fines.calcularMulta(2));
 
+            context.setVariable(null, context);
+    
+            String templateName = "email_multa";
+    
+            String contentHTML = templateEngine.process(templateName, context);
+    
+            try {
+                EmailDTO emailDto = new EmailDTO();
+                emailDto.setResponsableEconomico(loan.getResponsableEconomico().getEmail());
+                emailDto.setAsunto("Notificación de Multa");
+                emailDto.setMensaje(contentHTML);
+    
+                emailNotificationService.enviarCorreo(emailDto); // Llama al método para enviar el correo
+            } catch (MessagingException e) {
+                throw new RuntimeException("Error al enviar notificación de multa: " + e.getMessage(), e);
+            }
+        }
+
+    }
