@@ -15,6 +15,7 @@ public class Loan {
     private boolean vencido;
     private String libroId;
     private ResponsableEconomic responsableEconomic;
+    private Student estudiante;
     private Object isbn;
 
     public Loan(){}
@@ -81,6 +82,14 @@ public class Loan {
 
     public void SetIsbn(Object isbn){
         this.isbn=isbn;
+    }
+
+    public Student getEstudiante() {
+        return estudiante;
+    }
+
+    public void setEstudiante(Student estudiante) {
+        this.estudiante = estudiante;
     }
 
 }
