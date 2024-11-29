@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles del Préstamo de Libro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #007bbf;
+            text-align: center;
+        }
+        p {
+            line-height: 1.6;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #888;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Detalles del Préstamo de Libro</h1>
+    <p>Hola,</p>
+    <p>
+        El estudiante ha tomado prestado un libro de nuestra biblioteca. A continuación, se detallan los datos del préstamo:
+    </p>
+    <ul>
+        <li><strong>Título del libro:</strong> <span th:text="${tituloLibro}">[Título del libro]</span></li>
+        <li><strong>ISBN:</strong> <span th:text="${isbnLibro}">[ISBN del libro]</span></li>
+        <li><strong>Fecha del préstamo:</strong> <span th:text="${fechaPrestamo}">[Fecha del préstamo]</span></li>
+        <li><strong>Fecha límite de devolución:</strong> <span th:text="${fechaDevolucion}">[Fecha límite de devolución]</span></li>
+    </ul>
+    <p>
+        Por favor, asegúrese de que el libro sea devuelto dentro del plazo establecido.
+    </p>
+    <div class="footer">
+        <p>Atentamente,</p>
+        <p>El equipo de Notificaciones</p>
+    </div>
+</div>
+</body>
+</html>
