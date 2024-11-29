@@ -60,4 +60,10 @@ public class EmailController {
         notificationService.enviarnotificacionmulta(loan, fines, student);
         return new ResponseEntity<>("Notificación de multa enviada exitosamente", HttpStatus.OK);
     }
+
+    @GetMapping("/health")
+    public ResponseEntity<String> checkHealth() {
+        return new ResponseEntity<>("Service is up and running!", HttpStatus.OK);
+    }
+
 }
