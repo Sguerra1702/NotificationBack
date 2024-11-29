@@ -120,10 +120,10 @@
 		        <version>2.13.0</version>
 		        <configuration>
 		            <schemaVersion>v2</schemaVersion>
-		            <resourceGroup>DefaultResourceGroup-EUS</resourceGroup>
-		            <appName>Notificaciones</appName>
+		            <resourceGroup>CVDSNotificaciones_group</resourceGroup>
+		            <appName>CVDSNotificaciones_group</appName>
 		            <pricingTier>f1</pricingTier>
-		            <region>eastus2</region>
+		            <region>canadacentral</region>
 		            <runtime>
 		                <os>Windows</os>
 		                <javaVersion>Java 21</javaVersion>
