@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #0c0505;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #17bccb;
+    }
+    .header {
+      font-size: 22px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #444;
+    }
+    .content {
+      margin-bottom: 20px;
+    }
+    .details {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .details p {
+      margin: 10px 0;
+    }
+    .footer {
+      font-size: 14px;
+      color: #555;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .footer strong {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">Notificación de Préstamo Realizado - Biblioteca</div>
+    <div class="content">
+      <p>Estimad@ <b th:text="${responsableEconomico}"></b>,</p>
+      <p>El estudiante<b th:text="${estudiante}"></b> ha tomado prestado un libro de nuestra biblioteca. A continuación, se detallan los datos del préstamo:</p>
+      <p>Detalles:</p>
+    </div>
+    <ul>
+      <li><strong>Título del libro:</strong> <b th:text="${tituloLibro}"></b></li>
+      <li><strong>ISBN:</strong> <b th:text="${isbn}"></b></li>
+      <li><strong>Fecha del préstamo:</strong> <b th:text="${fechaPrestamo}"></b></li>
+      <li><strong>Fecha límite de devolución:</strong> <b th:text="${fechaLimiteDevolucion}"></b></li>
+      <li><strong>Multa por día de retraso:</strong> $<b th:text="${multaPorDia}"></b></li>
+    </ul>
+    <div class="content">
+      <p>Le solicitamos devolver el libro en las fechas estipuladas y mantenerlo en buen estado.</p>
+      <p>Atentamente, <br> Equipo de la Biblioteca</p>
+    </div>
+    <div class="footer">
+      <p><strong>Biblioteca - Colegio Nuestra Señora de la Sabiduría</strong></p>
+    </div>
+  </div>
+</body>
+</html>

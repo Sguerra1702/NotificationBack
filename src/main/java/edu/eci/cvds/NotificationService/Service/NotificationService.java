@@ -1,59 +1,150 @@
 package edu.eci.cvds.NotificationService.Service;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import edu.eci.cvds.NotificationService.Model.Load;
+import edu.eci.cvds.NotificationService.Model.EmailDTO;
+import edu.eci.cvds.NotificationService.Model.Fines;
+import edu.eci.cvds.NotificationService.Model.Loan;
 import edu.eci.cvds.NotificationService.Model.Notification;
 import edu.eci.cvds.NotificationService.Model.NotificationType;
+import edu.eci.cvds.NotificationService.Model.Student;
 import edu.eci.cvds.NotificationService.Repository.NotificationRepository;
+import jakarta.mail.MessagingException;
+
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+
+
 @Service
 public class NotificationService {
-    @Autowired
+    
     private NotificationRepository notificationRepository;
+    private Fines fines;
 
-    public void enviarNotificacionprestamorealizado(String message){
+    @Autowired
+    private EmailNotificationService emailNotificationService;
 
+    @Autowired
+    private TemplateEngine templateEngine;
+
+    public void enviarNotificacionprestamorealizado(Loan loan, Student student){
+
+        Context context = new Context();
+        context.setVariable("estudiante",student.getname());
+        context.setVariable("responsableEconomico", loan.getResponsableEconomico().getNombre());
+        context.setVariable("tituloLibro", loan.getLibroId());
+        context.setVariable("isbn", loan.getIsbn());
+        context.setVariable("fechaPrestamo", loan.getFechaLoan());
+        context.setVariable("fechaLimiteDevolucion", loan.getFechaDevolucion());
+        String templateName = "Loan";
+        String contentHTML = templateEngine.process(templateName, context);
+
+        try {
+            EmailDTO emailDto = new EmailDTO();
+            emailDto.setResponsableEconomico(loan.getResponsableEconomico().getEmail());
+            emailDto.setAsunto("Recordatorio: PrestamoRealizado");
+            emailDto.setMensaje(contentHTML);
+
+            emailNotificationService.enviarCorreo(emailDto);
+
+        } catch (MessagingException e) {
+            throw new RuntimeException("Error al enviar notificación de préstamo por vencer: " + e.getMessage(), e);
+        }
+
+
+        /* 
         Notification notification = new Notification();
         notification.setType(NotificationType.LOAN_MADE);
         notification.setmessage(message);
         notification.setdate(LocalDate.now());
         notificationRepository.save(notification);
+        */
+
     }
 
-    public void enviarNotificacionprestamoavencer(LocalDate fechaDevolucion, String message){
-        LocalDate fechaRecordatorio = fechaDevolucion.minus(3, ChronoUnit.DAYS);
+    public void enviarNotificacionPrestamoPorVencer(Loan loan) {
+        LocalDate fechaRecordatorio = loan.getFechaDevolucion().minusDays(3);
+        if (LocalDate.now().isEqual(fechaRecordatorio)) {
+            Context context = new Context();
+            context.setVariable("responsableEconomico", loan.getResponsableEconomico().getNombre());
+            context.setVariable("tituloLibro", loan.getLibroId());
+            context.setVariable("isbn", loan.getIsbn());
+            context.setVariable("fechaLimiteDevolucion", loan.getFechaDevolucion());
 
-        if(LocalDate.now().equals(fechaRecordatorio)){
-            Notification notification =new Notification();
-            notification.setType(NotificationType.LOAN_REMINDER);
-            notification.setmessage(message);
-            notification.setdate(LocalDate.now());
-            notificationRepository.save(notification);
+            String templateName = "LoanReminder";
+            String contentHTML = templateEngine.process(templateName, context);
 
+            try {
+                EmailDTO emailDto = new EmailDTO();
+                emailDto.setResponsableEconomico(loan.getResponsableEconomico().getEmail());
+                emailDto.setAsunto("Recordatorio: Préstamo próximo a vencer");
+                emailDto.setMensaje(contentHTML);
+
+                emailNotificationService.enviarCorreo(emailDto);
+
+            } catch (MessagingException e) {
+                throw new RuntimeException("Error al enviar notificación de préstamo por vencer: " + e.getMessage(), e);
+            }
+        }
+    }
+
+
+    public void enviarnotificacionprestamovencido(Loan loan) throws MessagingException{
+        if (LocalDate.now().isEqual(loan.getFechaDevolucion())){
+        Context context = new Context();
+        context.setVariable("responsableEconomico", loan.getResponsableEconomico().getNombre());
+        context.setVariable("tituloLibro", loan.getLibroId());
+        context.setVariable("isbn", loan.getIsbn());
+        context.setVariable("fechaPrestamo", loan.getFechaLoan());
+
+        String templateName = "LoanOverdue";
+
+        String contentHTML = templateEngine.process(templateName, context);
+
+        try {
+            EmailDTO emailDto = new EmailDTO();
+            emailDto.setResponsableEconomico(loan.getResponsableEconomico().getEmail());
+            emailDto.setAsunto("Notificación de Préstamo Vencido");
+            emailDto.setMensaje(contentHTML);
+
+            emailNotificationService.enviarCorreo(emailDto); // Llama al método para enviar el correo
+        } catch (MessagingException e) {
+            throw new RuntimeException("Error al enviar notificación de préstamo vencido: " + e.getMessage(), e);
+        }
+    }
+    }
+
+
+
+    public void enviarnotificacionmulta(Loan loan, Fines fines, Student student){
+            Context context = new Context();
+            context.setVariable("estudiante",student.getname());
+            context.setVariable("responsableEconomico", loan.getResponsableEconomico().getNombre());
+            context.setVariable("tituloLibro", loan.getLibroId());
+            context.setVariable("isbn", loan.getIsbn());
+            context.setVariable("fechaLimiteDevolucion", loan.getFechaDevolucion());
+            context.setVariable("multaPorDia", fines.calcularMulta(2));
+
+            context.setVariable(null, context);
+    
+            String templateName = "email_multa";
+    
+            String contentHTML = templateEngine.process(templateName, context);
+    
+            try {
+                EmailDTO emailDto = new EmailDTO();
+                emailDto.setResponsableEconomico(loan.getResponsableEconomico().getEmail());
+                emailDto.setAsunto("Notificación de Multa");
+                emailDto.setMensaje(contentHTML);
+    
+                emailNotificationService.enviarCorreo(emailDto); // Llama al método para enviar el correo
+            } catch (MessagingException e) {
+                throw new RuntimeException("Error al enviar notificación de multa: " + e.getMessage(), e);
+            }
         }
 
     }
-
-    public void enviarnotificacionprestamovencido(Load load){
-        if(LocalDate.now().isEqual(load.getFechaDevolucion()));
-            String message = "el prestamo ha vencido, por favor devuelva el libr0";
-            Notification notification = new Notification("Prestamo vencido", message, LocalDate.now(), load.getResponsableEconomico());
-            notification.setType(NotificationType.LOAN_OVERDUE);
-            notificationRepository.save(notification);
-        }
-
-
-
-    public void enviarnotificacionmulta(String message, double multa){
-        Notification notification = new Notification();
-        notification.setType(NotificationType.FINE);
-        notification.setmessage(message + "monto de la multa: $" + multa);
-        notificationRepository.save(notification);
-    }
-    }
-
