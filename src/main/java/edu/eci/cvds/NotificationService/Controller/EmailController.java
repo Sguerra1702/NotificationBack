@@ -1,14 +1,18 @@
 package edu.eci.cvds.NotificationService.Controller;
 
+import java.time.LocalDate;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import edu.eci.cvds.NotificationService.Repository.IEmailRepository;
-import edu.eci.cvds.NotificationService.Model.EmailDTO;
 import edu.eci.cvds.NotificationService.Model.Fines;
 import edu.eci.cvds.NotificationService.Model.Loan;
+import edu.eci.cvds.NotificationService.Model.ResponsableEconomic;
 import edu.eci.cvds.NotificationService.Model.Student;
 import edu.eci.cvds.NotificationService.Service.NotificationService;
 import jakarta.mail.MessagingException;
@@ -19,25 +23,33 @@ public class EmailController {
 
     @Autowired
     IEmailRepository emailRepository;
-
+    
     @Autowired
     private NotificationService notificationService;
 
-    @PostMapping("/send-email")
-    public ResponseEntity<String> enviarCorreo(@RequestBody EmailDTO emailDTO) throws MessagingException {
-        // Obtener templateName desde el EmailDTO
-        String templateName = emailDTO.getTemplateName();
-        // Llamar al repositorio con los parámetros
-        emailRepository.enviarCorreo(emailDTO);
-
-        return new ResponseEntity<>("Correo enviado exitosamente", HttpStatus.OK);
-    }
-
     // Endpoint para enviar notificación de préstamo realizado
-    @PostMapping("/loan-made")
-    public ResponseEntity<String> enviarNotificacionPrestamoRealizado(@RequestBody Loan loan) {
-        notificationService.enviarNotificacionprestamorealizado(loan, loan.getEstudiante());
-        return new ResponseEntity<>("Notificación de préstamo realizado enviada exitosamente", HttpStatus.OK);
+
+    @GetMapping("/loan-made")
+    public ResponseEntity<String> endpointNotificacionprestamorealizado() {
+
+        Student student = new Student();
+        student.setname("Manuel Barrera");
+
+        Loan loan = new Loan();
+        loan.setLibroId("Introducción a Java");
+        loan.SetIsbn("978-3-16-148410-0");
+        loan.setFechaLoan(LocalDate.of(2024, 11, 10));
+        loan.setFechaDevolucion(LocalDate.now());
+
+        ResponsableEconomic responsable = new ResponsableEconomic();
+        responsable.setNombre("Natalia Páez");
+        responsable.setEmail("rodriguezandres160918@gmail.com");
+        loan.setResponsableEconomico(responsable);
+
+        // Llamamos al método de enviar notificación
+        notificationService.enviarNotificacionprestamorealizado(loan, student);
+
+        return new ResponseEntity<>("Notificacion enviada exitosamente ", HttpStatus.OK);
     }
 
     // Endpoint para enviar notificación de préstamo por vencer
@@ -65,5 +77,10 @@ public class EmailController {
     public ResponseEntity<String> checkHealth() {
         return new ResponseEntity<>("Service is up and running!", HttpStatus.OK);
     }
+
+    @GetMapping("/test")
+        public ResponseEntity<String> testEndpoint() {
+            return ResponseEntity.ok("Test OK");
+}
 
 }

@@ -81,7 +81,7 @@ public class EmailNotificationServiceTest {
         notificationService.enviarNotificacionPrestamoPorVencer(loan);
     }
     */
-    /* 
+    
     @Test
     public void testEnviarNotificacionPrestamoRealizado() throws MessagingException {
 
@@ -102,7 +102,6 @@ public class EmailNotificationServiceTest {
         // Llamar al método para enviar el correo
         notificationService.enviarNotificacionprestamorealizado(loan,student);
     }
-    */
 
     @Test
     public void testEnviarNotificacionMulta() throws MessagingException {
@@ -123,7 +122,6 @@ public class EmailNotificationServiceTest {
         responsable.setNombre("Natalia Páez");
         responsable.setEmail("rodriguezandres160918@gmail.com");
         loan.setResponsableEconomico(responsable);
-
 
         // Llamar al método para enviar el correo
         notificationService.enviarnotificacionmulta(loan,fines,student);

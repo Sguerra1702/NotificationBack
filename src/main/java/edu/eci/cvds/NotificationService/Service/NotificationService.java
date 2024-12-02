@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import edu.eci.cvds.NotificationService.Model.EmailDTO;
 import edu.eci.cvds.NotificationService.Model.Fines;
 import edu.eci.cvds.NotificationService.Model.Loan;
-import edu.eci.cvds.NotificationService.Model.Notification;
-import edu.eci.cvds.NotificationService.Model.NotificationType;
 import edu.eci.cvds.NotificationService.Model.Student;
 import edu.eci.cvds.NotificationService.Repository.NotificationRepository;
 import jakarta.mail.MessagingException;
@@ -22,9 +20,6 @@ import org.thymeleaf.context.Context;
 @Service
 public class NotificationService {
     
-    private NotificationRepository notificationRepository;
-    private Fines fines;
-
     @Autowired
     private EmailNotificationService emailNotificationService;
 
@@ -54,15 +49,6 @@ public class NotificationService {
         } catch (MessagingException e) {
             throw new RuntimeException("Error al enviar notificación de préstamo por vencer: " + e.getMessage(), e);
         }
-
-
-        /* 
-        Notification notification = new Notification();
-        notification.setType(NotificationType.LOAN_MADE);
-        notification.setmessage(message);
-        notification.setdate(LocalDate.now());
-        notificationRepository.save(notification);
-        */
 
     }
 
