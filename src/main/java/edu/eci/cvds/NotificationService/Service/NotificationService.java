@@ -10,7 +10,6 @@ import edu.eci.cvds.NotificationService.Model.EmailDTO;
 import edu.eci.cvds.NotificationService.Model.Fines;
 import edu.eci.cvds.NotificationService.Model.Loan;
 import edu.eci.cvds.NotificationService.Model.Student;
-import edu.eci.cvds.NotificationService.Repository.NotificationRepository;
 import jakarta.mail.MessagingException;
 
 import org.thymeleaf.TemplateEngine;
