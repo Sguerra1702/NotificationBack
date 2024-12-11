@@ -30,39 +30,21 @@ public class EmailController {
     @Autowired
     private RestTemplate restTemplate;
 
-    private final String studenturl = "";
-    private final String Loanurl = "";
-
 
     // Endpoint para enviar notificación de préstamo realizado
 
-    @GetMapping("/loan-made")
-    public ResponseEntity<String> endpointNotificacionprestamorealizado() {
-
-
-        Long StudentName = 1L;
-        Long bodyLoan = 1L;
-
-        ResponseEntity<Student> studentResponse = restTemplate.exchange(studenturl + StudentName,HttpMethod.GET, null, Student.class);
-        ResponseEntity<Loan> loanResponse = restTemplate.exchange(Loanurl + bodyLoan,HttpMethod.GET, null, Loan.class);
-        
-        Student student = studentResponse.getBody();
-        Loan loan = loanResponse.getBody();
+    @PostMapping("/loan-made")
+    public ResponseEntity<String> endpointNotificacionprestamorealizado(@RequestBody Loan loan) {
 
         // Llamamos al método de enviar notificación
-        notificationService.enviarNotificacionprestamorealizado(loan, student);
+        notificationService.enviarNotificacionprestamorealizado(loan);
 
         return new ResponseEntity<>("Notificacion enviada exitosamente ", HttpStatus.OK);
     }
 
     // Endpoint para enviar notificación de préstamo por vencer
     @GetMapping("/loan-reminder")
-    public ResponseEntity<String> enviarNotificacionPrestamoPorVencer() {
-        
-        Long bodyLoan = 1L;
-
-        ResponseEntity<Loan> loanResponse = restTemplate.exchange(Loanurl + bodyLoan,HttpMethod.GET, null, Loan.class);
-        Loan loan = loanResponse.getBody();
+    public ResponseEntity<String> enviarNotificacionPrestamoPorVencer(@RequestBody Loan loan) {
         
         notificationService.enviarNotificacionPrestamoPorVencer(loan);
         return new ResponseEntity<>("Notificación de préstamo por vencer enviada exitosamente", HttpStatus.OK);
@@ -70,30 +52,15 @@ public class EmailController {
 
     // Endpoint para enviar notificación de préstamo vencido
     @GetMapping("/loan-overdue")
-    public ResponseEntity<String> enviarNotificacionPrestamoVencido() throws MessagingException {
+    public ResponseEntity<String> enviarNotificacionPrestamoVencido(@RequestBody Loan loan) throws MessagingException {
 
-        Long bodyLoan = 1L;
-
-        ResponseEntity<Loan> loanResponse = restTemplate.exchange(Loanurl + bodyLoan,HttpMethod.GET, null, Loan.class);
-        Loan loan = loanResponse.getBody();
-        
         notificationService.enviarnotificacionprestamovencido(loan);
         return new ResponseEntity<>("Notificación de préstamo vencido enviada exitosamente", HttpStatus.OK);
     }
-
+    /* 
     // Endpoint para enviar notificación de multa
     @GetMapping("/fine")
     public ResponseEntity<String> enviarNotificacionMulta(@RequestParam Fines fines) {
-
-        Long StudentName = 1L;
-        Long bodyLoan = 1L;
-
-        ResponseEntity<Student> studentResponse = restTemplate.exchange(studenturl + StudentName,HttpMethod.GET, null, Student.class);
-        ResponseEntity<Loan> loanResponse = restTemplate.exchange(Loanurl + bodyLoan,HttpMethod.GET, null, Loan.class);
-        
-        Student student = studentResponse.getBody();
-        Loan loan = loanResponse.getBody();
-
 
         notificationService.enviarnotificacionmulta(loan, fines, student);
         return new ResponseEntity<>("Notificación de multa enviada exitosamente", HttpStatus.OK);
@@ -104,5 +71,5 @@ public class EmailController {
         return new ResponseEntity<>("Service is up and running!", HttpStatus.OK);
     }
 
-
+    */
 }

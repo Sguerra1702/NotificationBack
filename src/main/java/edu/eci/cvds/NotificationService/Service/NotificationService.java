@@ -25,10 +25,9 @@ public class NotificationService {
     @Autowired
     private TemplateEngine templateEngine;
 
-    public void enviarNotificacionprestamorealizado(Loan loan, Student student){
+    public void enviarNotificacionprestamorealizado(Loan loan){
 
         Context context = new Context();
-        context.setVariable("estudiante",student.getname());
         context.setVariable("responsableEconomico", loan.getResponsableEconomico().getNombre());
         context.setVariable("tituloLibro", loan.getLibroId());
         context.setVariable("isbn", loan.getIsbn());

@@ -100,7 +100,7 @@ public class EmailNotificationServiceTest {
         loan.setResponsableEconomico(responsable);
 
         // Llamar al método para enviar el correo
-        notificationService.enviarNotificacionprestamorealizado(loan,student);
+        notificationService.enviarNotificacionprestamorealizado(loan);
     }
 
     @Test
