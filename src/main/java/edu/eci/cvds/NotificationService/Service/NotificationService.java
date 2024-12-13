@@ -43,7 +43,7 @@ public class NotificationService {
 
         try {
             EmailDTO emailDto = new EmailDTO();
-            emailDto.setResponsableEconomico(loan.getResponsableEconomic().getEmail());
+            emailDto.setResponsableEconomico("rodriguezandres160918@gmail.com");
             emailDto.setAsunto("Recordatorio: PrestamoRealizado");
             emailDto.setMensaje(contentHTML);
 
