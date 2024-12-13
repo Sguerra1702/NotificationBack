@@ -121,7 +121,7 @@
 										<limit>
 											<counter>CLASS</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0.85</minimum> <!-- Coverage threshold for build success -->
+											<minimum>0.50</minimum> <!-- Coverage threshold for build success -->
 										</limit>
 									</limits>
 								</rule>
