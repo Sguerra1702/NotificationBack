@@ -97,7 +97,6 @@ public class EmailNotificationServiceTest {
         ResponsableEconomic responsable = new ResponsableEconomic();
         responsable.setNombre("Natalia Páez");
         responsable.setEmail("rodriguezandres160918@gmail.com");
-
         // Llamar al método para enviar el correo
         notificationService.enviarNotificacionprestamorealizado(loan);
     }

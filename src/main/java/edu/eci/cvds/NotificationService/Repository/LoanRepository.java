@@ -5,5 +5,4 @@ import edu.eci.cvds.NotificationService.Model.Loan;
 
 public interface LoanRepository extends MongoRepository<Loan, String>{
 
-    
 }
