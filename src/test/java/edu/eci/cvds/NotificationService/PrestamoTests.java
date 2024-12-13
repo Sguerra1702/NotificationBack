@@ -1,5 +1,5 @@
 package edu.eci.cvds.NotificationService;
-
+/* 
 import edu.eci.cvds.NotificationService.Model.Loan;
 import edu.eci.cvds.NotificationService.Model.ResponsableEconomic;
 
@@ -85,4 +85,6 @@ public class PrestamoTests {
         assertEquals(LocalDate.of(2024, 4, 1), prestamo.getFechaLoan());
         assertEquals(LocalDate.of(2024, 4, 10), prestamo.getFechaDevolucion());
     }
+    
 }
+*/

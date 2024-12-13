@@ -28,17 +28,16 @@ public class NotificationService {
     public void enviarNotificacionprestamorealizado(Loan loan){
 
         Context context = new Context();
-        context.setVariable("responsableEconomico", loan.getResponsableEconomico().getNombre());
-        context.setVariable("tituloLibro", loan.getLibroId());
-        context.setVariable("isbn", loan.getIsbn());
-        context.setVariable("fechaPrestamo", loan.getFechaLoan());
-        context.setVariable("fechaLimiteDevolucion", loan.getFechaDevolucion());
+        context.setVariable("estudiante", loan.getStudentName());
+        context.setVariable("tituloLibro", loan.getNameBook());
+        context.setVariable("isbn", loan.getBookId());
+        context.setVariable("fechaPrestamo", loan.getLoanDate());
+        context.setVariable("fechaLimiteDevolucion", loan.getMaxReturnDate());
         String templateName = "Loan";
         String contentHTML = templateEngine.process(templateName, context);
 
         try {
             EmailDTO emailDto = new EmailDTO();
-            emailDto.setResponsableEconomico(loan.getResponsableEconomico().getEmail());
             emailDto.setAsunto("Recordatorio: PrestamoRealizado");
             emailDto.setMensaje(contentHTML);
 
@@ -49,7 +48,7 @@ public class NotificationService {
         }
 
     }
-
+    /* 
     public void enviarNotificacionPrestamoPorVencer(Loan loan) {
         LocalDate fechaRecordatorio = loan.getFechaDevolucion().minusDays(3);
         if (LocalDate.now().isEqual(fechaRecordatorio)) {
@@ -130,5 +129,5 @@ public class NotificationService {
                 throw new RuntimeException("Error al enviar notificación de multa: " + e.getMessage(), e);
             }
         }
-
-    }
+*/
+}

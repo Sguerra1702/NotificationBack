@@ -1,95 +1,53 @@
 package edu.eci.cvds.NotificationService.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.time.LocalDate;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.annotation.Id;
+import java.util.ArrayList;
+import java.util.List;
 
-@Document(collection = "Loans")
+@Getter
+@Setter
+@NoArgsConstructor
+@Entity
+@Table(name = "loans")
 public class Loan {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private LocalDate fechaLoan;
-    private LocalDate fechaDevolucion;
-    private boolean vencido;
-    private String libroId;
-    private ResponsableEconomic responsableEconomic;
-    private Student estudiante;
-    private Object isbn;
+    @Column(name = "student_id", nullable = false)
+    private String studentId;
 
-    public Loan(){}
+    @Column(name = "student_name", nullable = false)
+    private String studentName;
 
-    public Loan(ResponsableEconomic responsableEconomic, LocalDate fechaLoan, LocalDate fechaDevolucion, boolean vencido, String libroId){
-        this.responsableEconomic = responsableEconomic;
-        this.fechaLoan = fechaLoan;
-        this.fechaDevolucion = fechaDevolucion;
-        this.vencido = vencido;
-        this.libroId = libroId;
+    @Column(name = "copy_id", nullable = false)
+    private String copyId;
+
+    @Column(name = "book_id", nullable = false)
+    private String bookId;
+
+    @Column(name = "name_book", nullable = true)
+    private String nameBook;
+
+    @Column(name = "loan_date", nullable = false)
+    private LocalDate loanDate;
+
+    @Column(name = "max_return_date", nullable = false)
+    private LocalDate maxReturnDate;
+
+    public Loan(String studentId, String studentName, String copyId, String bookId, String nameBook, LocalDate loanDate, LocalDate maxReturnDate) {
+        this.studentId = studentId;
+        this.studentName = studentName;
+        this.copyId = copyId;
+        this.bookId = bookId;
+        this.nameBook = nameBook;
+        this.loanDate = loanDate;
+        this.maxReturnDate = maxReturnDate;
     }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public ResponsableEconomic getResponsableEconomico() {
-        return responsableEconomic;
-    }
-
-    public void setResponsableEconomico(ResponsableEconomic responsableEconomico) {
-        this.responsableEconomic = responsableEconomico;
-    }
-
-    public String getLibroId() {
-        return libroId;
-    }
-
-    public void setLibroId(String libroId) {
-        this.libroId = libroId;
-    }
-
-    public LocalDate getFechaLoan() {
-        return fechaLoan;
-    }
-
-    public void setFechaLoan(LocalDate fechaLoan) {
-        this.fechaLoan = fechaLoan;
-    }
-
-    public LocalDate getFechaDevolucion() {
-        return fechaDevolucion;
-    }
-
-    public void setFechaDevolucion(LocalDate fechaDevolucion) {
-        this.fechaDevolucion = fechaDevolucion;
-    }
-
-    public boolean isVencido() {
-        return vencido;
-    }
-
-    public void setVencido(boolean vencido) {
-        this.vencido = vencido;
-    }
-
-    public Object getIsbn() {
-        return isbn;
-    }
-
-    public void SetIsbn(Object isbn){
-        this.isbn=isbn;
-    }
-
-    public Student getEstudiante() {
-        return estudiante;
-    }
-
-    public void setEstudiante(Student estudiante) {
-        this.estudiante = estudiante;
-    }
-
 }

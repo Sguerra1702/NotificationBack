@@ -27,21 +27,16 @@ public class EmailController {
     @Autowired
     private NotificationService notificationService;
 
-    @Autowired
-    private RestTemplate restTemplate;
 
 
     // Endpoint para enviar notificación de préstamo realizado
 
     @PostMapping("/loan-made")
     public ResponseEntity<String> endpointNotificacionprestamorealizado(@RequestBody Loan loan) {
-
-        // Llamamos al método de enviar notificación
         notificationService.enviarNotificacionprestamorealizado(loan);
-
         return new ResponseEntity<>("Notificacion enviada exitosamente ", HttpStatus.OK);
     }
-
+    /* 
     // Endpoint para enviar notificación de préstamo por vencer
     @GetMapping("/loan-reminder")
     public ResponseEntity<String> enviarNotificacionPrestamoPorVencer(@RequestBody Loan loan) {
@@ -56,7 +51,7 @@ public class EmailController {
 
         notificationService.enviarnotificacionprestamovencido(loan);
         return new ResponseEntity<>("Notificación de préstamo vencido enviada exitosamente", HttpStatus.OK);
-    }
+    } 
     /* 
     // Endpoint para enviar notificación de multa
     @GetMapping("/fine")
@@ -65,11 +60,10 @@ public class EmailController {
         notificationService.enviarnotificacionmulta(loan, fines, student);
         return new ResponseEntity<>("Notificación de multa enviada exitosamente", HttpStatus.OK);
     }
-
+    */
     @GetMapping("/health")
     public ResponseEntity<String> checkHealth() {
         return new ResponseEntity<>("Service is up and running!", HttpStatus.OK);
     }
 
-    */
 }
