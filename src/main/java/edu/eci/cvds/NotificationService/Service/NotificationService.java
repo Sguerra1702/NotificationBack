@@ -28,7 +28,11 @@ public class NotificationService {
     public void enviarNotificacionprestamorealizado(Loan loan){
 
         Context context = new Context();
-        context.setVariable("responsableEconomico", loan.getResponsableEconomic().getNombre());
+        if(loan.getResponsableEconomic() != null){
+            context.setVariable("responsableEconomico", loan.getResponsableEconomic().getNombre());
+        }else{
+        context.setVariable("responsableEconomico", "no asignado");
+        }
         context.setVariable("estudiante", loan.getStudentName());
         context.setVariable("tituloLibro", loan.getNameBook());
         context.setVariable("isbn", loan.getBookId());
