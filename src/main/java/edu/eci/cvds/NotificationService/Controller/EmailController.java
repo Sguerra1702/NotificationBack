@@ -34,20 +34,26 @@ public class EmailController {
 
     @PostMapping("/loan-made")
     public ResponseEntity<String> endpointNotificacionprestamorealizado(@RequestBody Loan loan) {
+    try {
         // Verificar si la fecha de vencimiento está dentro de los próximos 3 días
-    LocalDate fechaLimiteDevolucion = loan.getMaxReturnDate();
-    LocalDate fechaActual = LocalDate.now();
-    long diasDeDiferencia = ChronoUnit.DAYS.between(fechaActual, fechaLimiteDevolucion);
+        LocalDate fechaLimiteDevolucion = loan.getMaxReturnDate();
+        LocalDate fechaActual = LocalDate.now();
+        long diasDeDiferencia = ChronoUnit.DAYS.between(fechaActual, fechaLimiteDevolucion);
 
-    if (diasDeDiferencia <= 3) {
-        notificationService.enviarNotificacionPrestamoPorVencer(loan);
-    } else {
-        // De lo contrario, enviar la notificación de préstamo realizado
-        notificationService.enviarNotificacionprestamorealizado(loan);
+        if(diasDeDiferencia <= 3) {
+            notificationService.enviarNotificacionPrestamoPorVencer(loan);
+        } else {
+            notificationService.enviarNotificacionprestamorealizado(loan);
+        }
+
+        return new ResponseEntity<>("Notificación enviada exitosamente", HttpStatus.OK);
+
+    } catch (Exception e) {
+        // Captura cualquier excepción y muestra un mensaje detallado
+        return new ResponseEntity<>("Error en el servidor: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-    return new ResponseEntity<>("Notificación enviada exitosamente", HttpStatus.OK);
 }
+
 
     @GetMapping("/health")
     public ResponseEntity<String> checkHealth() {

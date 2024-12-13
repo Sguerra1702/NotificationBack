@@ -41,16 +41,26 @@ public class Loan {
     @Column(name = "max_return_date", nullable = false)
     private LocalDate maxReturnDate;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "loan_state", nullable = false)
+    private LoanState loanState;
+
+    @OneToMany(mappedBy = "loan", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<LoanHistory> loanHistory;
+
     private ResponsableEconomic responsableEconomic;
 
-    public Loan(String studentId, String studentName, String copyId, String bookId, String nameBook, LocalDate loanDate, LocalDate maxReturnDate) {
+    public Loan(String studentId, String studentName, String copyId, String bookId, String nameBook, LocalDate loanDate, LocalDate maxReturnDate, LoanState loanState) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.copyId = copyId;
         this.bookId = bookId;
         this.nameBook = nameBook;
         this.loanDate = loanDate;
+        this.loanState = loanState;
         this.maxReturnDate = maxReturnDate;
+        this.loanHistory = new ArrayList<>();
     }
 
     public ResponsableEconomic getResponsableEconomic() {
