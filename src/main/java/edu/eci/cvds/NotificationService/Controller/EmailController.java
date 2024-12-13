@@ -33,16 +33,29 @@ public class EmailController {
     // Endpoint para enviar notificación de préstamo realizado
 
     @PostMapping("/loan-made")
-    public ResponseEntity<String> endpointNotificacionprestamorealizado(@RequestBody Loan loan) {
+public ResponseEntity<String> endpointNotificacionprestamorealizado(@RequestBody Map<String, Object> loanData) {
     try {
+        String studentId = (String) loanData.get("studentId");
+        String studentName = (String) loanData.get("studentName");
+        String bookId = (String) loanData.get("bookId");
+        String nameBook = (String) loanData.get("nameBook");
+        LocalDate loanDate = LocalDate.parse((String) loanData.get("loanDate"));
+        LocalDate maxReturnDate = LocalDate.parse((String) loanData.get("maxReturnDate"));
+
+        
+        // Crear un objeto Loan a partir de los datos recibidos
+        Loan loan = new Loan(studentId, studentName, bookId, nameBook, nameBook, loanDate, maxReturnDate, null);
+        
         // Verificar si la fecha de vencimiento está dentro de los próximos 3 días
         LocalDate fechaLimiteDevolucion = loan.getMaxReturnDate();
         LocalDate fechaActual = LocalDate.now();
         long diasDeDiferencia = ChronoUnit.DAYS.between(fechaActual, fechaLimiteDevolucion);
 
         if(diasDeDiferencia <= 3) {
+            // Si el préstamo está por vencer, enviar notificación de préstamo por vencer
             notificationService.enviarNotificacionPrestamoPorVencer(loan);
         } else {
+            // De lo contrario, enviar la notificación de préstamo realizado
             notificationService.enviarNotificacionprestamorealizado(loan);
         }
 
@@ -53,6 +66,7 @@ public class EmailController {
         return new ResponseEntity<>("Error en el servidor: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
+
 
 
     @GetMapping("/health")
