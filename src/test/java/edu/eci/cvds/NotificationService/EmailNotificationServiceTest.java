@@ -48,10 +48,10 @@ public class EmailNotificationServiceTest {
     public void testEnviarNotificacionPrestamoVencido() throws MessagingException {
         // Configuración del objeto Loan de prueba
         Loan loan = new Loan();
-        loan.setLibroId("Introducción a Java");
-        loan.SetIsbn("978-3-16-148410-0");
-        loan.setFechaLoan(LocalDate.of(2024, 11, 10));
-        loan.setFechaDevolucion(LocalDate.now());
+        loan.setNameBook("Introducción a Java");
+        loan.setBookId("978-3-16-148410-0");
+        loan.setLoanDate(LocalDate.of(2024, 11, 10));
+        loan.setMaxReturnDate(LocalDate.now());
 
         ResponsableEconomic responsable = new ResponsableEconomic();
         responsable.setNombre("Natalia Páez");
@@ -61,7 +61,7 @@ public class EmailNotificationServiceTest {
          // Llamar al método para enviar el correo
          notificationService.enviarnotificacionprestamovencido(loan);
     }
-    */
+
     /* 
     @Test
     public void testEnviarNotificacionPrestamoPorVencer() throws MessagingException {
@@ -81,22 +81,21 @@ public class EmailNotificationServiceTest {
         notificationService.enviarNotificacionPrestamoPorVencer(loan);
     }
     */
-    /* 
+    
     @Test
     public void testEnviarNotificacionPrestamoRealizado() throws MessagingException {
-
-        Student student = new Student();
-        student.setname("Manuel Barrera");
 
         Loan loan = new Loan();
         loan.setNameBook("Introducción a Java");
         loan.setId((long) (978-3-16-148410-0));
+        loan.setStudentName("manolo");
         loan.setLoanDate(LocalDate.of(2024, 11, 10));
         loan.setMaxReturnDate(LocalDate.now());
 
         ResponsableEconomic responsable = new ResponsableEconomic();
         responsable.setNombre("Natalia Páez");
         responsable.setEmail("rodriguezandres160918@gmail.com");
+        loan.setResponsableEconomic(responsable);
         // Llamar al método para enviar el correo
         notificationService.enviarNotificacionprestamorealizado(loan);
     }

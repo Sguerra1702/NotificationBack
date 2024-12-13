@@ -28,6 +28,7 @@ public class NotificationService {
     public void enviarNotificacionprestamorealizado(Loan loan){
 
         Context context = new Context();
+        context.setVariable("responsableEconomico", loan.getResponsableEconomic().getNombre());
         context.setVariable("estudiante", loan.getStudentName());
         context.setVariable("tituloLibro", loan.getNameBook());
         context.setVariable("isbn", loan.getBookId());
@@ -38,32 +39,33 @@ public class NotificationService {
 
         try {
             EmailDTO emailDto = new EmailDTO();
+            emailDto.setResponsableEconomico(loan.getResponsableEconomic().getEmail());
             emailDto.setAsunto("Recordatorio: PrestamoRealizado");
             emailDto.setMensaje(contentHTML);
 
             emailNotificationService.enviarCorreo(emailDto);
 
         } catch (MessagingException e) {
-            throw new RuntimeException("Error al enviar notificación de préstamo por vencer: " + e.getMessage(), e);
+            throw new RuntimeException("Error al enviar notificación de préstamo realizado: " + e.getMessage(), e);
         }
 
     }
-    /* 
+     
     public void enviarNotificacionPrestamoPorVencer(Loan loan) {
-        LocalDate fechaRecordatorio = loan.getFechaDevolucion().minusDays(3);
+        LocalDate fechaRecordatorio = loan.getMaxReturnDate().minusDays(3);
         if (LocalDate.now().isEqual(fechaRecordatorio)) {
             Context context = new Context();
-            context.setVariable("responsableEconomico", loan.getResponsableEconomico().getNombre());
-            context.setVariable("tituloLibro", loan.getLibroId());
-            context.setVariable("isbn", loan.getIsbn());
-            context.setVariable("fechaLimiteDevolucion", loan.getFechaDevolucion());
+            context.setVariable("responsableEconomico", loan.getResponsableEconomic().getNombre());
+            context.setVariable("tituloLibro", loan.getNameBook());
+            context.setVariable("isbn", loan.getBookId());
+            context.setVariable("fechaLimiteDevolucion", loan.getMaxReturnDate());
 
             String templateName = "LoanReminder";
             String contentHTML = templateEngine.process(templateName, context);
 
             try {
                 EmailDTO emailDto = new EmailDTO();
-                emailDto.setResponsableEconomico(loan.getResponsableEconomico().getEmail());
+                emailDto.setResponsableEconomico(loan.getResponsableEconomic().getEmail());
                 emailDto.setAsunto("Recordatorio: Préstamo próximo a vencer");
                 emailDto.setMensaje(contentHTML);
 
@@ -75,14 +77,14 @@ public class NotificationService {
         }
     }
 
-
+ 
     public void enviarnotificacionprestamovencido(Loan loan) throws MessagingException{
-        if (LocalDate.now().isEqual(loan.getFechaDevolucion())){
+        if (LocalDate.now().isEqual(loan.getMaxReturnDate())){
         Context context = new Context();
-        context.setVariable("responsableEconomico", loan.getResponsableEconomico().getNombre());
-        context.setVariable("tituloLibro", loan.getLibroId());
-        context.setVariable("isbn", loan.getIsbn());
-        context.setVariable("fechaPrestamo", loan.getFechaLoan());
+        context.setVariable("responsableEconomico", loan.getResponsableEconomic().getNombre());
+        context.setVariable("tituloLibro", loan.getNameBook());
+        context.setVariable("isbn", loan.getBookId());
+        context.setVariable("fechaPrestamo", loan.getLoanDate());
 
         String templateName = "LoanOverdue";
 
@@ -90,7 +92,7 @@ public class NotificationService {
 
         try {
             EmailDTO emailDto = new EmailDTO();
-            emailDto.setResponsableEconomico(loan.getResponsableEconomico().getEmail());
+            emailDto.setResponsableEconomico(loan.getResponsableEconomic().getEmail());
             emailDto.setAsunto("Notificación de Préstamo Vencido");
             emailDto.setMensaje(contentHTML);
 
@@ -103,13 +105,13 @@ public class NotificationService {
 
 
 
-    public void enviarnotificacionmulta(Loan loan, Fines fines, Student student){
+    public void enviarnotificacionmulta(Loan loan, Fines fines){
             Context context = new Context();
-            context.setVariable("estudiante",student.getname());
-            context.setVariable("responsableEconomico", loan.getResponsableEconomico().getNombre());
-            context.setVariable("tituloLibro", loan.getLibroId());
-            context.setVariable("isbn", loan.getIsbn());
-            context.setVariable("fechaLimiteDevolucion", loan.getFechaDevolucion());
+            context.setVariable("estudiante",loan.getStudentName());
+            context.setVariable("responsableEconomico", loan.getResponsableEconomic().getNombre());
+            context.setVariable("tituloLibro", loan.getNameBook());
+            context.setVariable("isbn", loan.getBookId());
+            context.setVariable("fechaLimiteDevolucion", loan.getMaxReturnDate());
             context.setVariable("multaPorDia", fines.calcularMulta(2));
 
             context.setVariable(null, context);
@@ -120,7 +122,7 @@ public class NotificationService {
     
             try {
                 EmailDTO emailDto = new EmailDTO();
-                emailDto.setResponsableEconomico(loan.getResponsableEconomico().getEmail());
+                emailDto.setResponsableEconomico(loan.getResponsableEconomic().getEmail());
                 emailDto.setAsunto("Notificación de Multa");
                 emailDto.setMensaje(contentHTML);
     
@@ -129,5 +131,5 @@ public class NotificationService {
                 throw new RuntimeException("Error al enviar notificación de multa: " + e.getMessage(), e);
             }
         }
-*/
+
 }

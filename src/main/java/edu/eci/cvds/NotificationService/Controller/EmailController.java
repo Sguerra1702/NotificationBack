@@ -1,6 +1,7 @@
 package edu.eci.cvds.NotificationService.Controller;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,34 +34,21 @@ public class EmailController {
 
     @PostMapping("/loan-made")
     public ResponseEntity<String> endpointNotificacionprestamorealizado(@RequestBody Loan loan) {
-        notificationService.enviarNotificacionprestamorealizado(loan);
-        return new ResponseEntity<>("Notificacion enviada exitosamente ", HttpStatus.OK);
-    }
-    /* 
-    // Endpoint para enviar notificación de préstamo por vencer
-    @GetMapping("/loan-reminder")
-    public ResponseEntity<String> enviarNotificacionPrestamoPorVencer(@RequestBody Loan loan) {
-        
+        // Verificar si la fecha de vencimiento está dentro de los próximos 3 días
+    LocalDate fechaLimiteDevolucion = loan.getMaxReturnDate();
+    LocalDate fechaActual = LocalDate.now();
+    long diasDeDiferencia = ChronoUnit.DAYS.between(fechaActual, fechaLimiteDevolucion);
+
+    if (diasDeDiferencia <= 3) {
         notificationService.enviarNotificacionPrestamoPorVencer(loan);
-        return new ResponseEntity<>("Notificación de préstamo por vencer enviada exitosamente", HttpStatus.OK);
+    } else {
+        // De lo contrario, enviar la notificación de préstamo realizado
+        notificationService.enviarNotificacionprestamorealizado(loan);
     }
 
-    // Endpoint para enviar notificación de préstamo vencido
-    @GetMapping("/loan-overdue")
-    public ResponseEntity<String> enviarNotificacionPrestamoVencido(@RequestBody Loan loan) throws MessagingException {
+    return new ResponseEntity<>("Notificación enviada exitosamente", HttpStatus.OK);
+}
 
-        notificationService.enviarnotificacionprestamovencido(loan);
-        return new ResponseEntity<>("Notificación de préstamo vencido enviada exitosamente", HttpStatus.OK);
-    } 
-    /* 
-    // Endpoint para enviar notificación de multa
-    @GetMapping("/fine")
-    public ResponseEntity<String> enviarNotificacionMulta(@RequestParam Fines fines) {
-
-        notificationService.enviarnotificacionmulta(loan, fines, student);
-        return new ResponseEntity<>("Notificación de multa enviada exitosamente", HttpStatus.OK);
-    }
-    */
     @GetMapping("/health")
     public ResponseEntity<String> checkHealth() {
         return new ResponseEntity<>("Service is up and running!", HttpStatus.OK);

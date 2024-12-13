@@ -41,6 +41,8 @@ public class Loan {
     @Column(name = "max_return_date", nullable = false)
     private LocalDate maxReturnDate;
 
+    private ResponsableEconomic responsableEconomic;
+
     public Loan(String studentId, String studentName, String copyId, String bookId, String nameBook, LocalDate loanDate, LocalDate maxReturnDate) {
         this.studentId = studentId;
         this.studentName = studentName;
@@ -49,5 +51,13 @@ public class Loan {
         this.nameBook = nameBook;
         this.loanDate = loanDate;
         this.maxReturnDate = maxReturnDate;
+    }
+
+    public ResponsableEconomic getResponsableEconomic() {
+        return responsableEconomic;
+    }
+
+    public void setResponsableEconomic(ResponsableEconomic responsableEconomic) {
+        this.responsableEconomic = responsableEconomic;
     }
 }
