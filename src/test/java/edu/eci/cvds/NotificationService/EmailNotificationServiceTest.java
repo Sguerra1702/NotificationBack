@@ -74,7 +74,7 @@ public class EmailNotificationServiceTest {
 
         ResponsableEconomic responsable = new ResponsableEconomic();
         responsable.setNombre("Natalia Páez");
-        responsable.setEmail("felipebarrera104@gmail.com");
+        responsable.setEmail("rodriguezandres160918@gmail.com");
         loan.setResponsableEconomic(responsable);
 
         // Llamar al método para enviar el correo
@@ -88,7 +88,7 @@ public class EmailNotificationServiceTest {
         Loan loan = new Loan();
         loan.setNameBook("Introducción a Java");
         loan.setId((long) (978-3-16-148410-0));
-        loan.setStudentName("manolo");
+        loan.setStudentName("Manuel Barrera ");
         loan.setLoanDate(LocalDate.of(2024, 11, 10));
         loan.setMaxReturnDate(LocalDate.now());
 
