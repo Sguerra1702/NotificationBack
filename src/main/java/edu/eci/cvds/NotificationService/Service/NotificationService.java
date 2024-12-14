@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import edu.eci.cvds.NotificationService.Model.EmailDTO;
 import edu.eci.cvds.NotificationService.Model.Fines;
 import edu.eci.cvds.NotificationService.Model.Loan;
-import edu.eci.cvds.NotificationService.Model.Student;
 import jakarta.mail.MessagingException;
 
 import org.thymeleaf.TemplateEngine;
@@ -29,9 +28,9 @@ public class NotificationService {
 
         Context context = new Context();
         if(loan.getResponsableEconomic() != null){
-            context.setVariable("responsableEconomico", loan.getResponsableEconomic().getNombre());
+        context.setVariable("responsableEconomico", loan.getResponsableEconomic().getNombre());
         }else{
-        context.setVariable("responsableEconomico", "no asignado");
+        context.setVariable("responsableEconomico", "Acudiente de" + loan.getStudentName());
         }
         context.setVariable("estudiante", loan.getStudentName());
         context.setVariable("tituloLibro", loan.getNameBook());

@@ -30,7 +30,7 @@ public class EmailNotificationServiceTest {
     private EmailNotificationService emailNotificationService;  // El servicio de correo
 
 
-    /* 
+    
     @Test
     public void testEnviarCorreo() throws MessagingException {
         EmailDTO emailDTO = new EmailDTO();
@@ -41,9 +41,9 @@ public class EmailNotificationServiceTest {
         emailNotificationService.enviarCorreo(emailDTO);
 
     }
-    */
     
-    /* 
+    
+    
     @Test
     public void testEnviarNotificacionPrestamoVencido() throws MessagingException {
         // Configuración del objeto Loan de prueba
@@ -56,31 +56,31 @@ public class EmailNotificationServiceTest {
         ResponsableEconomic responsable = new ResponsableEconomic();
         responsable.setNombre("Natalia Páez");
         responsable.setEmail("rodriguezandres160918@gmail.com");
-        loan.setResponsableEconomico(responsable);
+        loan.setResponsableEconomic(responsable);
 
          // Llamar al método para enviar el correo
          notificationService.enviarnotificacionprestamovencido(loan);
     }
 
-    /* 
+    
     @Test
     public void testEnviarNotificacionPrestamoPorVencer() throws MessagingException {
         // Configuración del objeto Loan de prueba
         Loan loan = new Loan();
-        loan.setLibroId("Introducción a Java");
-        loan.SetIsbn("978-3-16-148410-0");
-        loan.setFechaLoan(LocalDate.of(2024, 11, 10));
-        loan.setFechaDevolucion(LocalDate.now().plusDays(3)); // Fecha de devolución en 3 días
+        loan.setNameBook("Introducción a Java");
+        loan.setBookId("978-3-16-148410-0");
+        loan.setLoanDate(LocalDate.of(2024, 11, 10));
+        loan.setMaxReturnDate(LocalDate.now().plusDays(3)); // Fecha de devolución en 3 días
 
         ResponsableEconomic responsable = new ResponsableEconomic();
         responsable.setNombre("Natalia Páez");
         responsable.setEmail("felipebarrera104@gmail.com");
-        loan.setResponsableEconomico(responsable);
+        loan.setResponsableEconomic(responsable);
 
         // Llamar al método para enviar el correo
         notificationService.enviarNotificacionPrestamoPorVencer(loan);
     }
-    */
+    
     
     @Test
     public void testEnviarNotificacionPrestamoRealizado() throws MessagingException {
@@ -100,7 +100,7 @@ public class EmailNotificationServiceTest {
         notificationService.enviarNotificacionprestamorealizado(loan);
     }
     
-    /* 
+
     @Test
     public void testEnviarNotificacionMulta() throws MessagingException {
 
@@ -108,10 +108,10 @@ public class EmailNotificationServiceTest {
         student.setname("Manuel Barrera");
 
         Loan loan = new Loan();
-        loan.setId("Introducción a Java");
-        loan.SetIsbn("978-3-16-148410-0");
-        loan.setFechaLoan(LocalDate.of(2024, 11, 10));
-        loan.setFechaDevolucion(LocalDate.now());
+        loan.setNameBook("Introducción a Java");
+        loan.setBookId("978-3-16-148410-0");
+        loan.setLoanDate(LocalDate.of(2024, 11, 10));
+        loan.setMaxReturnDate(LocalDate.now());
         Fines fines = new Fines();
         fines.calcularMulta(2);
         
@@ -119,10 +119,10 @@ public class EmailNotificationServiceTest {
         ResponsableEconomic responsable = new ResponsableEconomic();
         responsable.setNombre("Natalia Páez");
         responsable.setEmail("rodriguezandres160918@gmail.com");
-        loan.setResponsableEconomico(responsable);
+        loan.setResponsableEconomic(responsable);
 
         // Llamar al método para enviar el correo
-        notificationService.enviarnotificacionmulta(loan,fines,student);
+        notificationService.enviarnotificacionmulta(loan, fines);
     }
-        */
+
 }
